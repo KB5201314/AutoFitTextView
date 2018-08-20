@@ -1,3 +1,11 @@
+MODIFYED（fork） VERSION
+================
+
+- 增加了对maxHeight属性值的参考
+- 除去对末尾字符的限定以修复中文支持
+- 修改限定方式为maxHeight和maxLines两种，优先判断maxLines是否设置，避免了只设置maxLines时发生的一些奇奇怪怪的问题，例如反复设置同一段文本的过程中，文字越来越大最后才趋于正常
+
+
 [![Release](https://img.shields.io/github/release/AndroidDeveloperLB/AutoFitTextView.svg?style=flat)](https://jitpack.io/#AndroidDeveloperLB/AutoFitTextView)
 
 AutoFitTextView
