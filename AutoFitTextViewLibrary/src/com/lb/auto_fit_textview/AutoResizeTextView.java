@@ -72,40 +72,57 @@ public class AutoResizeTextView extends AppCompatTextView {
                     text = transformationMethod.getTransformation(getText(), AutoResizeTextView.this).toString();
                 else
                     text = getText().toString();
-                final boolean singleLine = getMaxLines() == 1;
-                if (singleLine) {
-                    textRect.bottom = _paint.getFontSpacing();
-                    textRect.right = _paint.measureText(text);
-                } else {
-                    final StaticLayout layout = new StaticLayout(text, _paint, _widthLimit, Alignment.ALIGN_NORMAL, _spacingMult, _spacingAdd, true);
+
+                final StaticLayout layout = new StaticLayout(text, _paint, _widthLimit, Alignment.ALIGN_NORMAL, _spacingMult, _spacingAdd, true);
+                boolean resizeHeightLimitedByLines = getMaxLines() > 0;
+
+                if (resizeHeightLimitedByLines) {// 按行数来限定
+
                     // return early if we have more lines
-                    if (getMaxLines() != NO_LINE_LIMIT && layout.getLineCount() > getMaxLines())
+                    if (layout.getLineCount() > getMaxLines()) {
                         return 1;
-                    textRect.bottom = layout.getHeight();
-                    int maxWidth = -1;
-                    int lineCount = layout.getLineCount();
-                    for (int i = 0; i < lineCount; i++) {
-
-//                        除去对末尾字符的限定以增加中文支持；
-
-//                        int end = layout.getLineEnd(i);
-//                        if (i < lineCount - 1 && end > 0 && !isValidWordWrap(text.charAt(end - 1), text.charAt(end)))
-//                            return 1;
-
-                        if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i))
-                            maxWidth = (int) layout.getLineRight(i) - (int) layout.getLineLeft(i);
+                    } else {
+                        return -1;
                     }
-                    //for (int i = 0; i < layout.getLineCount(); i++)
-                    //    if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i))
-                    //        maxWidth = (int) layout.getLineRight(i) - (int) layout.getLineLeft(i);
-                    textRect.right = maxWidth;
+                } else {
+
+                    textRect.bottom = layout.getHeight();
+                    textRect.right = layout.getWidth();
+                    textRect.offsetTo(0, 0);
+                    if (availableSpace.contains(textRect))
+                        // may be too small, don't worry we will find the best match
+                        return -1;
+                    // else, too big
+                    return 1;
+
                 }
-                textRect.offsetTo(0, 0);
-                if (availableSpace.contains(textRect))
-                    // may be too small, don't worry we will find the best match
-                    return -1;
-                // else, too big
-                return 1;
+
+//                final boolean singleLine = getMaxLines() == 1;
+//                if (singleLine) {
+//                    textRect.bottom = _paint.getFontSpacing();
+//                    textRect.right = _paint.measureText(text);
+//                } else {
+//                    textRect.bottom = layout.getHeight();
+//                    textRect.right = layout.getWidth();
+//                    int maxWidth = -1;
+//                    int lineCount = layout.getLineCount();
+//                    for (int i = 0; i < lineCount; i++) {
+//
+////                        除去对末尾字符的限定以增加中文支持；
+//
+////                        int end = layout.getLineEnd(i);
+////                        if (i < lineCount - 1 && end > 0 && !isValidWordWrap(text.charAt(end - 1), text.charAt(end)))
+////                            return 1;
+//
+//                        if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i))
+//                            maxWidth = (int) layout.getLineRight(i) - (int) layout.getLineLeft(i);
+//                    }
+                //for (int i = 0; i < layout.getLineCount(); i++)
+                //    if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i))
+                //        maxWidth = (int) layout.getLineRight(i) - (int) layout.getLineLeft(i);
+//                    textRect.right = maxWidth;
+//                }
+
             }
         };
         _initialized = true;
