@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AutoFitTextView.iml" filepath="$PROJECT_DIR$/AutoFitTextView.iml" />
       <module fileurl="file://$PROJECT_DIR$/AutoFitTextViewLibrary/AutoFitTextViewLibrary.iml" filepath="$PROJECT_DIR$/AutoFitTextViewLibrary/AutoFitTextViewLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AutoFitTextViewLibrary/AutoFitTextViewLibrary.iml" filepath="$PROJECT_DIR$/AutoFitTextViewLibrary/AutoFitTextViewLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/AutoFitTextViewSample/AutoFitTextViewSample.iml" filepath="$PROJECT_DIR$/AutoFitTextViewSample/AutoFitTextViewSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AutoFitTextViewSample/AutoFitTextViewSample.iml" filepath="$PROJECT_DIR$/AutoFitTextViewSample/AutoFitTextViewSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AutoFitTextView_fork.iml" filepath="$PROJECT_DIR$/.idea/AutoFitTextView_fork.iml" />
     </modules>
   </component>
 </project>

@@ -85,9 +85,13 @@ public class AutoResizeTextView extends AppCompatTextView {
                     int maxWidth = -1;
                     int lineCount = layout.getLineCount();
                     for (int i = 0; i < lineCount; i++) {
-                        int end = layout.getLineEnd(i);
-                        if (i < lineCount - 1 && end > 0 && !isValidWordWrap(text.charAt(end - 1), text.charAt(end)))
-                            return 1;
+
+//                        除去对末尾字符的限定以增加中文支持；
+
+//                        int end = layout.getLineEnd(i);
+//                        if (i < lineCount - 1 && end > 0 && !isValidWordWrap(text.charAt(end - 1), text.charAt(end)))
+//                            return 1;
+
                         if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i))
                             maxWidth = (int) layout.getLineRight(i) - (int) layout.getLineLeft(i);
                     }
@@ -203,7 +207,12 @@ public class AutoResizeTextView extends AppCompatTextView {
         if (!_initialized)
             return;
         final int startSize = (int) _minTextSize;
-        final int heightLimit = getMeasuredHeight() - getCompoundPaddingBottom() - getCompoundPaddingTop();
+        final int heightLimit;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && getMaxHeight() != -1) {// 增加了对maxHeight属性值的参考
+            heightLimit = getMaxHeight() - getCompoundPaddingBottom() - getCompoundPaddingTop();
+        } else {
+            heightLimit = getMeasuredHeight() - getCompoundPaddingBottom() - getCompoundPaddingTop();
+        }
         _widthLimit = getMeasuredWidth() - getCompoundPaddingLeft() - getCompoundPaddingRight();
         if (_widthLimit <= 0)
             return;
